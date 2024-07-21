@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
 const IP_CHECK_URL = "https://api.ipify.org?format=json";
 
