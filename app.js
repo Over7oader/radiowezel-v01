@@ -1,22 +1,22 @@
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
 const IP_CHECK_URL = "https://api.ipify.org?format=json";
 
-export default {
+module.exports = {
   async fetch(request, env, ctx) {
     if (request.method !== "POST") {
       return new Response("Only POST requests are allowed", { status: 405 });
     }
 
     try {
-      // Sprawdź IP Workera
+      // Check Worker's IP
       const ipResponse = await fetch(IP_CHECK_URL);
       const ipData = await ipResponse.json();
       const workerIP = ipData.ip;
 
-      // Pobierz dane z żądania
+      // Get data from the request
       const requestData = await request.json();
 
-      // Sprawdź, czy klucz API jest podany w żądaniu
+      // Check if API key is provided in the request
       if (!requestData.apiKey) {
         return new Response(JSON.stringify({ error: "API key is missing" }), {
           status: 400,
@@ -24,7 +24,7 @@ export default {
         });
       }
 
-      // Przygotuj nowe żądanie do API Gemini
+      // Prepare new request to Gemini API
       const geminiResponse = await fetch(`${GEMINI_API_URL}?key=${requestData.apiKey}`, {
         method: 'POST',
         headers: {
@@ -33,16 +33,16 @@ export default {
         body: JSON.stringify(requestData.content),
       });
 
-      // Pobierz odpowiedź z API Gemini
+      // Get response from Gemini API
       const geminiData = await geminiResponse.json();
 
-      // Przygotuj odpowiedź z danymi Gemini i IP Workera
+      // Prepare response with Gemini data and Worker's IP
       const responseData = {
         geminiResponse: geminiData,
         workerIP: workerIP
       };
 
-      // Zwróć odpowiedź
+      // Return response
       return new Response(JSON.stringify(responseData), {
         status: geminiResponse.status,
         headers: {
