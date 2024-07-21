@@ -1,15 +1,12 @@
 {
-  "name": "gemini-api-proxy",
+  "name": "radiowezel-v01",
   "version": "1.0.0",
-  "description": "Proxy for Gemini API with IP check",
+  "description": "Opis twojego projektu",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "node-fetch": "^3.3.1"
-  },
-  "type": "commonjs",
-  "author": "",
-  "license": "ISC"
+    "node-fetch": "^3.0.0"
+  }
 }
